@@ -1,11 +1,7 @@
 name: Shrinkme Automation Bot
 
 on:
-  # Memicu bot secara manual dari tab Actions
   workflow_dispatch:
-  # Mengatur bot berjalan otomatis setiap beberapa jam jika diinginkan (opsional)
-  # schedule:
-  #   - cron: '0 */3 * * *' # Berjalan setiap 3 jam
 
 jobs:
   run-bot:
@@ -19,16 +15,6 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
-
-    - name: Install Google Chrome & Dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y wget curl unzip libxi6 libgconf-2-4 libnss3
-        # Mengunduh dan menginstal Google Chrome versi stabil terbaru
-        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-        sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
 
     - name: Install Python Dependencies
       run: |
