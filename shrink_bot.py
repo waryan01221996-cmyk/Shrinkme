@@ -35,10 +35,22 @@ def bypass_shrinkme(target_url):
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--mute-audio")
     
-    # Menjalankan chrome dengan library penyamar sidik jari digital
-    driver = uc.Chrome(options=options, version_main=124)
-    driver.set_window_size(1366, 768) 
-    wait = WebDriverWait(driver, 25)
+    # Argumen tambahan untuk stabilitas di server Linux Headless GitHub
+    options.add_argument("--disable-setuid-sandbox")
+    options.add_argument("--remote-debugging-port=9222")
+    
+    # 🔴 PENTING: Jika nanti kamu memasukkan Proxy Residential, hapus tanda pagar (#) di bawah ini:
+    # PROXY = "http://username:password@ip:port"
+    # options.add_argument(f'--proxy-server={PROXY}')
+
+    try:
+        # Membiarkan library mendeteksi versi Chrome bawaan GitHub secara otomatis (Anti-Crash)
+        driver = uc.Chrome(options=options)
+        driver.set_window_size(1366, 768) 
+        wait = WebDriverWait(driver, 25)
+    except Exception as e:
+        print_log(f"❌ Gagal menginisialisasi Browser: {str(e)}")
+        return
     
     try:
         # 🟢 CEK IP RUNNER GITHUB YANG SEDANG AKTIF
@@ -125,4 +137,3 @@ if __name__ == "__main__":
     
     # Jalankan bot
     bypass_shrinkme(target_link)
-
